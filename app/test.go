@@ -1,7 +1,7 @@
 package app
 
 import (
-	"gin_test/model"
+	"gintest/model"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

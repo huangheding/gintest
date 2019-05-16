@@ -1,8 +1,6 @@
 package model
 
-import (
-	"github.com/BurntSushi/toml"
-)
+import "github.com/BurntSushi/toml"
 
 type Server struct {
 	Address string //项目监听端口
