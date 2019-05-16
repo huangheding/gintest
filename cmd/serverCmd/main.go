@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	"gin_test/cmd"
-	"gin_test/common"
-	"gin_test/model"
+	"gintest/cmd"
+	"gintest/common"
+	"gintest/model"
 )
 
 func main() {

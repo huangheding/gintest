@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"gin_test/app"
+	"gintest/app"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
