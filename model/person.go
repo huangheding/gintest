@@ -2,7 +2,7 @@ package model
 
 import (
 	"fmt"
-	"gin_test/common"
+	"gintest/common"
 )
 
 //定义person类型结构
