@@ -9,3 +9,6 @@ git push origin dev-revision-test
 
 设置push默认分支
 git push --set-upstream origin dev-revision-test
+
+设置本地分支与远程服务器分支关联
+ git branch --set-upstream-to=origin/dev-revision-test dev-revision-test
