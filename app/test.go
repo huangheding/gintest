@@ -13,3 +13,10 @@ func Index(c *gin.Context) {
 
 	c.JSON(http.StatusOK, result)
 }
+
+func FindInterest(c *gin.Context) {
+	p := model.Interest{}
+	result, _ := p.ArrangeInterest()
+
+	c.JSON(http.StatusOK, result)
+}

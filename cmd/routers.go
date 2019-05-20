@@ -14,6 +14,7 @@ func InitRouter() *gin.Engine {
 
 	{
 		router.GET("/app/test", app.Index)
+		router.GET("/app/interest", app.FindInterest)
 	}
 
 	return router
