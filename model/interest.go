@@ -38,6 +38,7 @@ func (i Interest) ArrangeInterest() ([]*Interest, error) {
 			linkedlist(item, v)
 		}
 	}
+	defer rows.Close()
 	return interests, nil
 }
 
