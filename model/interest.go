@@ -1,17 +1,18 @@
 package model
 
 import (
+	"database/sql"
 	"gintest/common"
 )
 
 // 定义interrest类型结构
 type Interest struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`
-	FullName string `json:"fullName"`
-	ParentID string `json:"parentID"`
-	Code     string `json:"code"`
-	Sort     string `json:"sort"`
+	Id       string         `json:"id"`
+	Name     sql.NullString `json:"name"`
+	FullName sql.NullString `json:"fullName"`
+	ParentID string         `json:"parentID"`
+	Code     sql.NullString `json:"code"`
+	Sort     sql.NullString `json:"sort"`
 
 	Childs []*Interest `json:"child"`
 }
@@ -27,8 +28,10 @@ func (i Interest) ArrangeInterest() ([]*Interest, error) {
 	//把数据赋值到interests
 	for rows.Next() {
 		temp := new(Interest)
-		// common.Fill(temp, rows)
-		rows.Scan(&temp.Id, &temp.Name, &temp.FullName, &temp.ParentID, &temp.Code, &temp.Sort)
+		err := common.Fill(temp, rows)
+		if err != nil {
+			return nil, err
+		}
 		item = append(item, temp)
 	}
 	for _, v := range item {
@@ -38,6 +41,7 @@ func (i Interest) ArrangeInterest() ([]*Interest, error) {
 			linkedlist(item, v)
 		}
 	}
+
 	defer rows.Close()
 	return interests, nil
 }
