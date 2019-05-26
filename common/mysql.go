@@ -17,7 +17,7 @@ var dbHost, dbPort, dbSchema, dbName, dbPass = "", "", "", "", ""
 //初始化DB
 func InitDB(address, port, user, password, schema, charset string) {
 	var err error
-	param := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=%s", user, password, address, port, schema, charset)
+	param := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=%s&parseTime=True&loc=Local", user, password, address, port, schema, charset)
 	dbInstance, err = sql.Open("mysql", param)
 	//错误检查
 	if err != nil {
@@ -42,7 +42,7 @@ func InitDB(address, port, user, password, schema, charset string) {
 //获取db实例 如果为nil就刷新连接
 func GetDb() (*sql.DB, error) {
 	if nil == dbInstance {
-		param := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8", dbName, dbPass, dbHost, dbPort, dbSchema)
+		param := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8&parseTime=True&loc=Local", dbName, dbPass, dbHost, dbPort, dbSchema)
 		dbStr, err := sql.Open("mysql", param)
 		if err != nil {
 			return nil, err

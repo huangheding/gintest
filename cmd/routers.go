@@ -14,6 +14,12 @@ func InitRouter() *gin.Engine {
 
 	{
 		router.GET("/app/test", app.Index)
+		router.GET("/app/test/del", app.DeletePerson)
+		router.GET("/app/test/upd", app.UpdatePerson)
+
+		//post
+		router.POST("/app/test/add", app.AddPerson)
+
 		router.GET("/app/interest", app.FindInterest)
 	}
 
