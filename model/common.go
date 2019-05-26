@@ -49,9 +49,9 @@ func InitDB(address, port, user, password, schema, charset string) {
 
 	/*
 		检查表是否存在; 不存在新建
-		struct对面创建表会在后面+s eq: type a struct 生成table as
+		struct对应创建表会在后面+s eq: type a struct 生成table as
 		但是有些gorm指定特殊关键字对应规则会改变
-		比如person 对面table people
+		比如person 对应table people
 	*/
 	if err := db.AutoMigrate(
 		new(Person),
