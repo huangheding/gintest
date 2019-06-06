@@ -1,39 +1,31 @@
 package model
 
-import (
-	"database/sql"
-	"gintest/common"
-)
+import "fmt"
 
 // 定义interrest类型结构
-type Interest struct {
-	Id       string         `json:"id"`
-	Name     sql.NullString `json:"name"`
-	FullName sql.NullString `json:"fullName"`
-	ParentID string         `json:"parentID"`
-	Code     sql.NullString `json:"code"`
-	Sort     sql.NullString `json:"sort"`
+type Cfg_interest struct {
+	Id       string `gorm:"primary_key";not null; json:"id"`
+	Name     string `gorm:"name;type:varchar(500)";not null; json:"name"`
+	FullName string `gorm:"fullName;type:varchar(500)"; json:"full_name"`
+	ParentID string `gorm:"parentID;type:int(11)";not null; json:"parent_id"`
+	Code     string `gorm:"code;type:int(10)";not null; json:"code"`
+	Sort     string `gorm:"sort;type:int(11)";not null; json:"sort"`
 
-	Childs []*Interest `json:"child"`
+	Childs []*Cfg_interest `json:"child"`
 }
 
 //查询cfg_interest表中所有数据
-func (i Interest) ArrangeInterest() ([]*Interest, error) {
-	rows, err := common.QueryTableData("Select * from cfg_interest")
-	if err != nil {
+func (i Cfg_interest) ArrangeInterest() ([]*Cfg_interest, error) {
+	//全局禁用表名复数
+	db.SingularTable(true)
+	interests := make([]*Cfg_interest, 0, 10)
+	item := make([]*Cfg_interest, 0, 10)
+	//赋值item
+	if err := db.Find(&item).Error; err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
-	interests := make([]*Interest, 0, 10)
-	item := make([]*Interest, 0, 10)
-	//把数据赋值到interests
-	for rows.Next() {
-		temp := new(Interest)
-		err := common.Fill(temp, rows)
-		if err != nil {
-			return nil, err
-		}
-		item = append(item, temp)
-	}
+
 	for _, v := range item {
 		//最上层父级
 		if v.ParentID == "0" {
@@ -42,14 +34,14 @@ func (i Interest) ArrangeInterest() ([]*Interest, error) {
 		}
 	}
 
-	defer rows.Close()
+	//defer rows.Close()
 	return interests, nil
 }
 
 //生成struct链表
-func linkedlist(data []*Interest, ptemp *Interest) {
+func linkedlist(data []*Cfg_interest, ptemp *Cfg_interest) {
 	//find child
-	childs := make([]*Interest, 0, 10)
+	childs := make([]*Cfg_interest, 0, 10)
 	for _, v := range data {
 		if v.ParentID == ptemp.Id {
 			childs = append(childs, v)

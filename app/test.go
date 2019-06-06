@@ -80,7 +80,7 @@ func UpdatePerson(c *gin.Context) {
 }
 
 func FindInterest(c *gin.Context) {
-	p := model.Interest{}
+	p := model.Cfg_interest{}
 	result, _ := p.ArrangeInterest()
 
 	c.JSON(http.StatusOK, result)
