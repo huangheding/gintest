@@ -16,8 +16,7 @@ type Cfg_interest struct {
 
 //查询cfg_interest表中所有数据
 func (i Cfg_interest) ArrangeInterest() ([]*Cfg_interest, error) {
-	//全局禁用表名复数
-	db.SingularTable(true)
+
 	interests := make([]*Cfg_interest, 0, 10)
 	item := make([]*Cfg_interest, 0, 10)
 	//赋值item

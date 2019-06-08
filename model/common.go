@@ -42,6 +42,8 @@ func InitDB(address, port, user, password, schema, charset string) {
 	param := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8&parseTime=True&loc=Local", user, password, address, port, schema)
 	db, err = gorm.Open("mysql", param)
 
+	//全局禁用表名复数
+	db.SingularTable(true)
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(100)
 	if err != nil {
