@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"gintest/app"
+	"gintest/util/ws"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -21,6 +22,10 @@ func InitRouter() *gin.Engine {
 		router.POST("/app/test/add", app.AddPerson)
 
 		router.GET("/app/interest", app.FindInterest)
+	}
+	//ws
+	{
+		router.GET("/ws", ws.ServeWs)
 	}
 
 	return router

@@ -5,11 +5,11 @@ import "fmt"
 // 定义interrest类型结构
 type Cfg_interest struct {
 	Id       string `gorm:"primary_key";not null; json:"id"`
-	Name     string `gorm:"name;type:varchar(500)";not null; json:"name"`
-	FullName string `gorm:"fullName;type:varchar(500)"; json:"full_name"`
-	ParentID string `gorm:"parentID;type:int(11)";not null; json:"parent_id"`
-	Code     string `gorm:"code;type:int(10)";not null; json:"code"`
-	Sort     string `gorm:"sort;type:int(11)";not null; json:"sort"`
+	Name     string `gorm:"name;type:varchar(256)";not null; json:"name"`
+	FullName string `gorm:"fullName;type:varchar(256)"; json:"full_name"`
+	ParentID string `gorm:"parentID;type:int(5)";not null; json:"parent_id"`
+	Code     string `gorm:"code;type:int(2)";not null; json:"code"`
+	Sort     string `gorm:"sort;type:int(2)";not null; json:"sort"`
 
 	Childs []*Cfg_interest `json:"child"`
 }
