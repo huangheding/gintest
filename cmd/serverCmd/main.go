@@ -2,14 +2,14 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"gintest/cmd"
 	"gintest/model"
+	"gintest/util/rs"
 	"gintest/util/ws"
 )
 
 func init() {
-	fmt.Println("init")
+
 }
 
 func main() {
@@ -22,6 +22,9 @@ func main() {
 	model.InitDB(config.MysqlConf.Host, config.MysqlConf.Port, config.MysqlConf.User, config.MysqlConf.Pass, config.MysqlConf.Schema, config.MysqlConf.Charset)
 	//ws
 	ws.InitWs()
+	//redis
+	rs.InitRedis(config.RedisConf.Adress)
+
 	router := cmd.InitRouter()
 	router.Run(config.ServerConf.Address)
 }

@@ -21,9 +21,13 @@ type Mysql struct {
 	Schema  string
 	Charset string //“utf8”
 }
+type Redis struct {
+	Adress string //redis地址
+}
 type TomlConfig struct {
 	ServerConf *Server `toml:"server"`
 	MysqlConf  *Mysql  `toml:"mysql"`
+	RedisConf  *Redis  `toml:"redis"`
 }
 
 func (config *TomlConfig) Init() int {

@@ -8,3 +8,6 @@ user = "root"
 pass = "root"
 schema = "test"
 charset = "utf8"
+
+[redis]
+address = "127.0.0.1:6379"
