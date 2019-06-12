@@ -17,8 +17,8 @@ func Test(c *gin.Context) {
 	rs.Produce(str)
 
 	if ws.ServiceOnline.IsUserOnline(strconv.Itoa(i)) {
-		toml := model.Config.Tomls
-		mess := rs.Custom(toml.RedisConf.Address, "redismq")
+		config := model.Config.Tomls
+		mess := rs.Custom(config.RedisConf.Address, "redismq")
 		ws.ServiceOnline.Push(strconv.Itoa(i), mess)
 	}
 	// }
