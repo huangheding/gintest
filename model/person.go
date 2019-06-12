@@ -7,7 +7,7 @@ import (
 
 //定义person类型结构
 type Person struct {
-	ID   string    `gorm:"primary_key;auto_increment" json:"id"`
+	ID   string    `gorm:"primary_key;type:int(5);auto_increment" json:"id"`
 	Name string    `gorm:"name;type:varchar(100)" json:"name"`
 	Age  string    `gorm:"age;type:int(5)" json:"age"`
 	Date time.Time `json:"date"`
