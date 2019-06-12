@@ -65,7 +65,7 @@ func InitWs() {
 		}
 		singleton.Run()
 	})
-	//全局变量
+	//全局
 	ServiceOnline = singleton
 }
 

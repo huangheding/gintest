@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"gintest/app"
 	"gintest/util/ws"
 
@@ -8,26 +9,40 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitRouter() *gin.Engine {
-	router := gin.Default()
+func middleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Println("I am before next")
+		// c.Header("Access-Control-Allow-Origin", "test")
+		// c.Set("name", "test")
+		/*
+		   c.Next()后就执行真实的路由函数，路由函数执行完成之后继续执行后续的代码
+		*/
+		c.Next()
+		fmt.Println("I am after next")
+	}
+}
 
-	router.Use(cors.Default()) //跨域
+func InitRouter() *gin.Engine {
+	r := gin.Default()
+
+	r.Use(middleware())
+	r.Use(cors.Default()) //跨域
 
 	{
-		router.GET("/app/test", app.Index)
-		router.GET("/app/test/del", app.DeletePerson)
-		router.GET("/app/test/upd", app.UpdatePerson)
+		r.GET("/app/test", app.Index)
+		r.GET("/app/test/del", app.DeletePerson)
+		r.GET("/app/test/upd", app.UpdatePerson)
 
 		//post
-		router.POST("/app/test/add", app.AddPerson)
+		r.POST("/app/test/add", app.AddPerson)
 
-		router.GET("/app/interest", app.FindInterest)
-		router.GET("/app/notice", app.Test)
+		r.GET("/app/interest", app.FindInterest)
+		r.GET("/app/notice", app.Test)
 	}
 	//ws
 	{
-		router.GET("/ws", ws.ServeWs)
+		r.GET("/ws", ws.ServeWs)
 	}
 
-	return router
+	return r
 }
