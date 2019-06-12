@@ -23,7 +23,7 @@ func main() {
 	//ws
 	ws.InitWs()
 	//redis
-	rs.InitRedis(config.RedisConf.Adress)
+	rs.InitRedis(config.RedisConf.Address)
 
 	router := cmd.InitRouter()
 	router.Run(config.ServerConf.Address)

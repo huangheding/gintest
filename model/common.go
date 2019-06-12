@@ -22,21 +22,26 @@ type Mysql struct {
 	Charset string //“utf8”
 }
 type Redis struct {
-	Adress string //redis地址
+	Address string //redis地址
 }
 type TomlConfig struct {
 	ServerConf *Server `toml:"server"`
 	MysqlConf  *Mysql  `toml:"mysql"`
 	RedisConf  *Redis  `toml:"redis"`
+	Tomls      *TomlConfig
 }
+
+var Config TomlConfig
 
 func (config *TomlConfig) Init() int {
 	//读取配置文件
 	_, err := toml.DecodeFile("config.toml", config)
+
 	if err != nil {
 		//log.info(err)
 		return -1
 	}
+	Config.Tomls = config
 	return 0
 }
 

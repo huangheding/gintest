@@ -2,7 +2,7 @@ package rs
 
 import "fmt"
 
-func Produce(szBytes []byte) (err error) {
+func Produce(content string) (err error) {
 	pConn := GetRedisConn()
 	if pConn.Err() != nil {
 		fmt.Println(pConn.Err().Error())
@@ -10,7 +10,7 @@ func Produce(szBytes []byte) (err error) {
 	}
 	defer pConn.Close()
 
-	if _, err = pConn.Do("lpush", "redismq", szBytes); err != nil {
+	if _, err = pConn.Do("lpush", "redismq", content); err != nil {
 		fmt.Println(err.Error())
 		return
 	}

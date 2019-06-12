@@ -8,11 +8,11 @@ import (
 	"github.com/garyburd/redigo/redis"
 )
 
-func Custom(address string, key string) {
+func Custom(address, key string) string {
 	c, err := redis.Dial("tcp", address)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return ""
 	}
 
 	defer c.Close()
@@ -23,6 +23,7 @@ func Custom(address string, key string) {
 			time.Sleep(time.Duration(rand.Intn(10)) * time.Second)
 		} else {
 			fmt.Println("cosume element:%s", ele)
+			return ele
 		}
 	}
 }

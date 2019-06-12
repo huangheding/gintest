@@ -22,6 +22,7 @@ func InitRouter() *gin.Engine {
 		router.POST("/app/test/add", app.AddPerson)
 
 		router.GET("/app/interest", app.FindInterest)
+		router.GET("/app/notice", app.Test)
 	}
 	//ws
 	{
