@@ -4,8 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"gintest/model"
+	"gintest/util/rs"
 	"log"
 	"net/http"
+	"strconv"
 	"sync"
 	"time"
 
@@ -81,6 +84,19 @@ func (s *user) Run() {
 				s.processIsOnline(req)
 			case msg := <-s.chanPush:
 				s.processPush(msg)
+			}
+		}
+	}()
+
+	go func() {
+		for {
+			config := model.Config.Tomls
+			mess := rs.Custom(config.RedisConf.Address, "redismq")
+			if ServiceOnline.IsUserOnline("1") {
+				ServiceOnline.Push(strconv.Itoa(1), mess)
+			} else {
+				//重新放回队列
+				rs.Produce(mess)
 			}
 		}
 	}()
