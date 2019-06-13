@@ -37,7 +37,7 @@ func InitRouter() *gin.Engine {
 		r.POST("/app/test/add", app.AddPerson)
 
 		r.GET("/app/interest", app.FindInterest)
-		r.GET("/app/notice", app.Test)
+		r.POST("/app/notice", app.Test)
 	}
 	//ws
 	{
