@@ -2,11 +2,11 @@
 address = ":8080"
 
 [mysql]
-host = "127.0.0.1"
+host = "192.168.1.238"
 port = "3306"
 user = "root"
-pass = "root"
-schema = "test"
+pass = "123456"
+schema = "gyys_cloud"
 charset = "utf8"
 
 [redis]

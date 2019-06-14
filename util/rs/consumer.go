@@ -2,28 +2,24 @@ package rs
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 
 	"github.com/gomodule/redigo/redis"
 )
 
 func Custom(address, key string) string {
-	c, err := redis.Dial("tcp", address)
-	if err != nil {
-		fmt.Println(err)
-		return ""
-	}
+	c := GetRedisConn()
 
 	defer c.Close()
-	for {
-		ele, err := redis.String(c.Do("lpop", key))
-		if err != nil {
-			// fmt.Println("no msg.sleep now")
-			time.Sleep(time.Duration(rand.Intn(20)) * time.Second)
-		} else {
-			fmt.Println("cosume element:%s", ele)
-			return ele
-		}
+
+	ele, err := redis.Strings(c.Do("brpop", key, 0))
+	if err != nil {
+		fmt.Println(err)
 	}
+	// fmt.Println("cosume element:%s", ele)
+	var data string
+	if len(ele) > 1 {
+		data = ele[1]
+		return data
+	}
+	return data
 }

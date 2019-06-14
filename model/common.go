@@ -48,7 +48,10 @@ func (config *TomlConfig) Init() int {
 //初始化数据库连接
 func InitDB(address, port, user, password, schema, charset string) {
 	var err error
-	param := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8&parseTime=True&loc=Local", user, password, address, port, schema)
+	//mysql5.7
+	// param := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8&parseTime=True&loc=Local", user, password, address, port, schema)
+	//mysql8.0
+	param := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8&autocommit=true&timeout=90s", user, password, address, port, schema)
 	db, err = gorm.Open("mysql", param)
 
 	//全局禁用表名复数
@@ -65,9 +68,9 @@ func InitDB(address, port, user, password, schema, charset string) {
 		但是有些gorm指定特殊关键字对应规则会改变
 		比如person 对应table people
 	*/
-	if err := db.AutoMigrate(
-		new(Person),
-	).Error; err != nil {
-		panic(err)
-	}
+	// if err := db.AutoMigrate(
+	// 	new(Person),
+	// ).Error; err != nil {
+	// 	panic(err)
+	// }
 }

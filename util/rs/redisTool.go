@@ -8,8 +8,8 @@ import (
 
 //压力测试 IDLE_COUNT 要和 ACTIVE_COUNT相等，否则会产生很多 TIME_WAIT 状态的 TCP 链接
 const (
-	IDLE_COUNT   = 2   //连接池空闲个数
-	ACTIVE_COUNT = 2   //连接池活动个数
+	IDLE_COUNT   = 5   //连接池空闲个数
+	ACTIVE_COUNT = 5   //连接池活动个数
 	IDLE_TIMEOUT = 180 //空闲超时时间
 )
 

@@ -8,7 +8,6 @@ import (
 	"gintest/util/rs"
 	"log"
 	"net/http"
-	"strconv"
 	"sync"
 	"time"
 
@@ -89,15 +88,28 @@ func (s *user) Run() {
 	}()
 
 	go func() {
+		i := 0
 		for {
 			config := model.Config.Tomls
+			fmt.Print(i)
 			mess := rs.Custom(config.RedisConf.Address, "redismq")
-			if ServiceOnline.IsUserOnline("1") {
-				ServiceOnline.Push(strconv.Itoa(1), mess)
-			} else {
+
+			fmt.Println(mess)
+			m := new(model.Content)
+			err := json.Unmarshal([]byte(mess), m)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			if ServiceOnline.IsUserOnline(m.Key) {
+				ServiceOnline.Push(m.Key, m.Key+m.Title+m.Desc)
+				fmt.Println("push!")
+			} else if mess != "" {
 				//重新放回队列
 				rs.Produce(mess)
 			}
+			i++
+			time.Sleep(1 * time.Second)
 		}
 	}()
 }

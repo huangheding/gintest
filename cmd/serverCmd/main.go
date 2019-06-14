@@ -27,4 +27,5 @@ func main() {
 
 	router := cmd.InitRouter()
 	router.Run(config.ServerConf.Address)
+
 }
