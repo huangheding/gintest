@@ -30,6 +30,7 @@ func (m *App_notify) InsertAppNotify() error {
 	log.Info(sql)
 	dbitem := db.Exec(sql, uid.String(), jsonstr, m.Category, m.NotifyTypeId, time.Now())
 	if err := dbitem.Error; err != nil {
+		log.Errorf("table app_notify insert err is：%s", err)
 		return err
 	}
 	m.ID = uid.String()
@@ -39,7 +40,9 @@ func (m *App_notify) InsertAppNotify() error {
 func (m *App_notify) InsertAppUserNotify() error {
 	uid, _ := uuid.NewV1()
 	sql := "INSERT into app_user_notify(id,is_read,notify_id,user_id,created_time) VALUES(UUID_TO_BIN(?,true),?,UUID_TO_BIN(?,true),UUID_TO_BIN(?,true),?)"
+	log.Info(sql)
 	if err := db.Exec(sql, uid.String(), 0, m.ID, m.UserId, time.Now()).Error; err != nil {
+		log.Errorf("table app_user_notify insert err is：%s", err)
 		return err
 	}
 	return nil

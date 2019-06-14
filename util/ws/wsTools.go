@@ -88,13 +88,9 @@ func (s *user) Run() {
 	}()
 
 	go func() {
-		i := 0
 		for {
 			config := model.Config.Tomls
-			fmt.Print(i)
 			mess := rs.Custom(config.RedisConf.Address, "redismq")
-
-			fmt.Println(mess)
 			m := new(model.Content)
 			err := json.Unmarshal([]byte(mess), m)
 			if err != nil {
@@ -108,7 +104,6 @@ func (s *user) Run() {
 				//重新放回队列
 				rs.Produce(mess)
 			}
-			i++
 			time.Sleep(1 * time.Second)
 		}
 	}()
