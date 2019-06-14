@@ -2,10 +2,10 @@ package model
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	log "github.com/sirupsen/logrus"
 )
 
 type App_notify struct {
@@ -27,7 +27,7 @@ func (m *App_notify) InsertAppNotify() error {
 	uid, _ := uuid.NewV1()
 	jsonstr, _ := json.Marshal(m.Content)
 	sql := "INSERT into app_notify(id,content,category,notify_type_id,created_time) VALUES(UUID_TO_BIN(?,true),?,?,UUID_TO_BIN(?,true),?)"
-	fmt.Println(sql)
+	log.Info(sql)
 	dbitem := db.Exec(sql, uid.String(), jsonstr, m.Category, m.NotifyTypeId, time.Now())
 	if err := dbitem.Error; err != nil {
 		return err

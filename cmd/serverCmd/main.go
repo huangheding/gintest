@@ -4,6 +4,7 @@ import (
 	"flag"
 	"gintest/cmd"
 	"gintest/model"
+	"gintest/util/log"
 	"gintest/util/rs"
 	"gintest/util/ws"
 )
@@ -24,6 +25,8 @@ func main() {
 	ws.InitWs()
 	//redis
 	rs.InitRedis(config.RedisConf.Address)
+	//logrus
+	log.InitLogger("info")
 
 	router := cmd.InitRouter()
 	router.Run(config.ServerConf.Address)
