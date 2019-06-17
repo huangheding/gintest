@@ -123,7 +123,7 @@ func ServeWs(c *gin.Context) {
 func (c *Client) readPump() {
 	var uid string
 	defer func() {
-		fmt.Println("readPump stop,", c.conn)
+		fmt.Println("readPump stop.")
 		ServiceOnline.UserOffline(uid) //注销
 		c.conn.Close()
 	}()
@@ -176,6 +176,7 @@ func (c *Client) connPump() {
 // 上线
 func (s *user) UserOnline(uid string, socket *websocket.Conn) {
 	s.chanUserOnline <- &online{UID: uid, Socket: socket}
+	fmt.Printf("%s上线注册成功", uid)
 }
 
 // 下线
